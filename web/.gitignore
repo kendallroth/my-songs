@@ -1,0 +1,16 @@
+####################################################################################################
+# NOTE: Each subproject should define its own '.gitignore' to benefit other tools (prettier, etc)! #
+####################################################################################################
+
+# Dependencies
+node_modules
+
+# Build files
+dist
+
+# Assorted
+*.log*
+.nuxt
+.nitro
+.cache
+.output
