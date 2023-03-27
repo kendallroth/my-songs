@@ -1,20 +1,24 @@
 import { type Account } from "~/slices/account/types";
+import { type Group } from "~/slices/group/types";
+import { type Song } from "~/slices/song/types";
 
-export interface Song {
+export interface List {
   id: string;
   created: string;
   updated: string;
   account: string;
   expand?: {
     account?: Account;
+    group?: Group;
+    songs?: Song[];
   };
+  group?: string;
   title: string;
   description?: string;
-  // TODO: Provide enum typing???
-  voicing: string;
+  date: string;
+  director?: string;
   tags?: string[];
   rating: number;
-  composer: string;
-  arranged: boolean;
   starredAt?: string;
+  songs: string[];
 }

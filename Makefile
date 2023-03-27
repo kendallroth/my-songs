@@ -4,15 +4,15 @@
 
 # Build the Pocketbase binary
 api-build:
-	cd ./pocketbase && go build -o pocketbase main.go && cd -
+	cd ./pocketbase && Make api-build && cd -
 
 # Serve compiled Pocketbase client
 api-serve:
-	./pocketbase/main.go serve
+	cd ./pocketbase && Make api-serve && cd -
 
 # Serve source/dev Pocketbase client
 api-serve-dev:
-	cd ./pocketbase && go run main.go serve && cd -
+	cd ./pocketbase && Make api-serve-dev && cd -
 
 ################################################################################
 ## App

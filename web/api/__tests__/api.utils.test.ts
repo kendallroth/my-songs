@@ -1,13 +1,13 @@
-import { type Pagination } from "~/api/types";
+import { type PaginationInput } from "~/api/types";
 
-import { DEFAULT_PAGE_SIZE, getPagination, getPaginationArgs } from "../utils";
+import { DEFAULT_PAGE_SIZE, getPaginationInput, getPaginationInputArgs } from "../utils";
 
-describe("getPagination", () => {
+describe("getPaginationInput", () => {
   describe("parses pagination with defaults", () => {
     const cases: {
-      expected?: Partial<Pagination>;
+      expected?: Partial<PaginationInput>;
       label: string;
-      value: Partial<Pagination> | undefined;
+      value: Partial<PaginationInput> | undefined;
     }[] = [
       { label: "undefined", value: undefined },
       { label: "empty", value: {} },
@@ -19,9 +19,9 @@ describe("getPagination", () => {
     ];
 
     test.each(cases)("parses incomplete pagination correctly", (input) => {
-      const output = getPagination(input.value);
+      const output = getPaginationInput(input.value);
 
-      const expected: Pagination = {
+      const expected: PaginationInput = {
         page: 1,
         perPage: DEFAULT_PAGE_SIZE,
         ...(input.expected ?? {}),
@@ -32,10 +32,10 @@ describe("getPagination", () => {
   });
 });
 
-describe("getPaginationArgs", () => {
+describe("getPaginationInputArgs", () => {
   test("returns proper arguments", () => {
-    const pagination: Pagination = { page: 2, perPage: 20 };
-    const output = getPaginationArgs(pagination);
+    const pagination: PaginationInput = { page: 2, perPage: 20 };
+    const output = getPaginationInputArgs(pagination);
 
     const expected = [pagination.page, pagination.perPage];
     expect(output).toStrictEqual(expected);

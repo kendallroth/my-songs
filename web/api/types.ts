@@ -17,10 +17,11 @@ export type PocketbaseError = ClientResponseError;
 
 export type AuthUser = Record | Admin | null;
 
-/** Paginated list */
+/** Pocketbase paginated list */
 export type PaginatedList = ListResult;
 
-export interface Pagination {
-  page: number;
-  perPage: number;
-}
+/** Pocketbase pagination input */
+export type PaginationInput = Pick<ListResult, "page" | "perPage">;
+
+/** Pocketbase pagination response */
+export type PaginationResponse = Pick<ListResult, "page" | "perPage" | "totalItems" | "totalPages">;
