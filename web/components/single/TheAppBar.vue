@@ -27,10 +27,20 @@ const handleLogout = () => {
     <VAppBarTitle class="app-bar__title">My Songs</VAppBarTitle>
     <template v-if="!loading" #append>
       <template v-if="accountStore.account">
-        <VBtn rounded variant="outlined" @click="logoutConfirmation.show">Logout</VBtn>
-        <VAvatar class="ml-4" color="white" variant="elevated">
-          {{ accountStore.account.name.charAt(0).toUpperCase() }}
-        </VAvatar>
+        <VMenu>
+          <template #activator="{ props }">
+            <VBtn v-bind="props" class="ml-4" icon>
+              <VAvatar color="white">
+                {{ accountStore.account.name.charAt(0).toUpperCase() }}
+              </VAvatar>
+            </VBtn>
+          </template>
+          <VList class="mt-1" min-width="200">
+            <VListItem class="text-subtitle-2">{{ accountStore.account.name }}</VListItem>
+            <VDivider />
+            <VListItem @click="logoutConfirmation.show">Logout</VListItem>
+          </VList>
+        </VMenu>
       </template>
       <template v-else>
         <VBtn :active="false" rounded to="/auth/login" variant="elevated">Login</VBtn>

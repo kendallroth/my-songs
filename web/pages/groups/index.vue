@@ -2,6 +2,7 @@
 import { mdiHeart as mdiFavourite, mdiViewList as mdiList, mdiRefresh } from "@mdi/js";
 
 import { type PaginationInput } from "~/api/types";
+import { type BreadcrumbItem } from "~/components/layout/Breadcrumbs";
 import { useGroupsQuery } from "~/slices/group/queries";
 
 definePageMeta({
@@ -16,15 +17,17 @@ const paginationInput = reactive<PaginationInput>({
 const { data, error, isFetching, isLoading, ...groupsQuery } = useGroupsQuery({
   pagination: paginationInput,
 });
+
+const breadcrumbs: BreadcrumbItem[] = [{ title: "Dashboard", to: "/" }, { title: "Groups" }];
 </script>
 
 <template>
   <LayoutStack align-items="stretch" class="pa-4" :spacing="4">
-    <ActionBar>
-      <template #left>
-        <div class="text-h3">Groups</div>
+    <TitleBar title="Groups">
+      <template #title:append>
+        <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </template>
-      <template #right>
+      <template #actions>
         <VBtn
           density="comfortable"
           :disabled="isFetching"
@@ -33,7 +36,7 @@ const { data, error, isFetching, isLoading, ...groupsQuery } = useGroupsQuery({
           @click="groupsQuery.refetch"
         />
       </template>
-    </ActionBar>
+    </TitleBar>
     <SimpleTable
       :empty="!data?.items.length"
       :error="error"

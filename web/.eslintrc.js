@@ -20,6 +20,7 @@ module.exports = {
   ],
   plugins: ["import"],
   rules: {
+    "@typescript-eslint/ban-ts-comment": "off",
     // Types should be imported inline with other imports but with 'type' specifier
     "@typescript-eslint/consistent-type-imports": ["warn", { fixStyle: "inline-type-imports" }],
     // While explicitly using 'any' is permissible, it should be avoided whenever possible (ignores type safety)
@@ -41,7 +42,7 @@ module.exports = {
         // Custom group definitions (uses 'minimatch')
         // NOTE: TS aliases are automatically categorized as 'internal' paths by plugin!
         pathGroups: [
-          { pattern: "#{components,imports}", group: "internal", position: "after" }
+          { pattern: "#{components,imports}", group: "internal", position: "before" }
         ],
         // Order import groups (can group multiple together)
         groups: [
@@ -83,6 +84,7 @@ module.exports = {
     "vue/attributes-order": ["warn", { alphabetical: true }],
     // Does not play very well with Nuxt auto-name generation (from folder structure)
     "vue/multi-word-component-names": "off",
+    "vue/no-unused-vars": ["warn"],
   },
   overrides: [
     {

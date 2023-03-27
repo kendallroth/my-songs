@@ -2,6 +2,7 @@
 import { mdiHeart as mdiFavourite, mdiMusic, mdiRefresh } from "@mdi/js";
 
 import { type PaginationInput } from "~/api/types";
+import { type BreadcrumbItem } from "~/components/layout/Breadcrumbs";
 import { useListsQuery } from "~/slices/list/queries";
 
 definePageMeta({
@@ -16,15 +17,17 @@ const paginationInput = reactive<PaginationInput>({
 const { data, error, isFetching, isLoading, ...listsQuery } = useListsQuery({
   pagination: paginationInput,
 });
+
+const breadcrumbs: BreadcrumbItem[] = [{ title: "Dashboard", to: "/" }, { title: "Lists" }];
 </script>
 
 <template>
   <LayoutStack align-items="stretch" class="pa-4" :spacing="4">
-    <ActionBar>
-      <template #left>
-        <div class="text-h3">Lists</div>
+    <TitleBar title="Lists">
+      <template #title:append>
+        <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </template>
-      <template #right>
+      <template #actions>
         <VBtn
           density="comfortable"
           :disabled="isFetching"
@@ -33,7 +36,7 @@ const { data, error, isFetching, isLoading, ...listsQuery } = useListsQuery({
           @click="listsQuery.refetch"
         />
       </template>
-    </ActionBar>
+    </TitleBar>
     <SimpleTable
       :empty="!data?.items.length"
       :error="error"
@@ -43,13 +46,11 @@ const { data, error, isFetching, isLoading, ...listsQuery } = useListsQuery({
       @update:pagination="(page) => (paginationInput.page = page)"
     >
       <template #head>
-        <tr>
-          <th>Title</th>
-          <th>Director</th>
-          <th>Date</th>
-          <th>Songs</th>
-          <th>Rating</th>
-        </tr>
+        <th>Title</th>
+        <th>Director</th>
+        <th>Date</th>
+        <th>Songs</th>
+        <th>Rating</th>
       </template>
       <template #body>
         <tr v-for="item in data?.items ?? []" :key="item.id">

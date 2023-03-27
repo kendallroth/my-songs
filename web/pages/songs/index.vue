@@ -2,6 +2,7 @@
 import { mdiHeart as mdiFavourite, mdiRefresh } from "@mdi/js";
 
 import { type PaginationInput } from "~/api/types";
+import { type BreadcrumbItem } from "~/components/layout/Breadcrumbs";
 import { useSongsQuery } from "~/slices/song/queries";
 
 definePageMeta({
@@ -16,15 +17,17 @@ const paginationInput = reactive<PaginationInput>({
 const { data, error, isFetching, isLoading, ...songsQuery } = useSongsQuery({
   pagination: paginationInput,
 });
+
+const breadcrumbs: BreadcrumbItem[] = [{ title: "Dashboard", to: "/" }, { title: "Songs" }];
 </script>
 
 <template>
   <LayoutStack align-items="stretch" class="pa-4" :spacing="4">
-    <ActionBar>
-      <template #left>
-        <div class="text-h3">Songs</div>
+    <TitleBar title="Songs">
+      <template #title:append>
+        <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </template>
-      <template #right>
+      <template #actions>
         <VBtn
           density="comfortable"
           :disabled="isFetching"
@@ -33,7 +36,7 @@ const { data, error, isFetching, isLoading, ...songsQuery } = useSongsQuery({
           @click="songsQuery.refetch"
         />
       </template>
-    </ActionBar>
+    </TitleBar>
     <SimpleTable
       :empty="!data?.items.length"
       :error="error"

@@ -27,11 +27,8 @@ const stats = computed(() => ({
     <VContainer class="pa-0">
       <VRow no-gutters>
         <VCol>
-          <ActionBar>
-            <template #left>
-              <div class="text-h3">Dashboard</div>
-            </template>
-            <template #right>
+          <TitleBar title="Dashboard">
+            <template #actions>
               <VBtn
                 density="comfortable"
                 :disabled="isFetching"
@@ -40,7 +37,7 @@ const stats = computed(() => ({
                 @click="refetch"
               />
             </template>
-          </ActionBar>
+          </TitleBar>
         </VCol>
       </VRow>
       <VRow>
