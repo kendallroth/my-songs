@@ -24,9 +24,6 @@ const breadcrumbs: BreadcrumbItem[] = [{ title: "Dashboard", to: "/" }, { title:
 <template>
   <LayoutStack align-items="stretch" class="pa-4" :spacing="4">
     <TitleBar title="Groups">
-      <template #title:append>
-        <Breadcrumbs :breadcrumbs="breadcrumbs" />
-      </template>
       <template #actions>
         <VBtn
           density="comfortable"
@@ -35,6 +32,9 @@ const breadcrumbs: BreadcrumbItem[] = [{ title: "Dashboard", to: "/" }, { title:
           variant="text"
           @click="groupsQuery.refetch"
         />
+      </template>
+      <template #breadcrumbs>
+        <Breadcrumbs :breadcrumbs="breadcrumbs" />
       </template>
     </TitleBar>
     <SimpleTable

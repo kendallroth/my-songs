@@ -1,7 +1,13 @@
 <script lang="ts" setup>
+import { VTable } from "vuetify/components";
+
 import { type PaginationResponse } from "~/api/types";
 
+type TableProps = InstanceType<typeof VTable>["$props"];
+
 interface SimpleTableProps {
+  density?: TableProps["density"];
+  // NOTE: Do not specify a default value for 'error' prop (causes issues)
   // eslint-disable-next-line vue/require-default-prop
   error?: unknown;
   empty?: boolean;
@@ -12,6 +18,7 @@ interface SimpleTableProps {
 }
 
 const props = withDefaults(defineProps<SimpleTableProps>(), {
+  density: "default",
   empty: false,
   emptyMessage: "No items found",
   fetching: false,
@@ -31,7 +38,7 @@ const paginationString = computed(() => `${props.pagination?.totalItems ?? 0} to
     <ProgressLoader v-if="loading" />
     <VAlert v-else-if="empty" type="warning">{{ emptyMessage }}</VAlert>
     <template v-else-if="!empty">
-      <VTable>
+      <VTable :density="density">
         <thead>
           <tr>
             <slot name="head" />

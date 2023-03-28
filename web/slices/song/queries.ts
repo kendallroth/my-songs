@@ -6,13 +6,14 @@ import { getPaginationInput, getPaginationInputArgs } from "~/api/utils";
 import { type Song } from "~/slices/song/types";
 
 export const songKeys = {
-  all: (pagination?: PaginationInput) => ["songs", pagination],
+  all: ["songs"],
+  allPaginated: (pagination?: PaginationInput) => [songKeys.all, pagination],
 } as const;
 
 export const useSongsQuery = ({ pagination }: { pagination?: PaginationInput }) => {
   return useQuery({
     keepPreviousData: true,
-    queryKey: songKeys.all(pagination),
+    queryKey: songKeys.allPaginated(pagination),
     queryFn: async () => {
       return pocketbase.collection("songs").getList<Song>(...getPaginationInputArgs(pagination), {
         ...getPaginationInput(pagination),
