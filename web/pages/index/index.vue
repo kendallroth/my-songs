@@ -9,7 +9,7 @@ import {
 import StatCard from "./StatCard.vue";
 import { useStatsQuery } from "./queries";
 
-const { data, isFetching, isLoading, refetch } = useStatsQuery();
+const { data, isError, isFetching, isLoading, refetch } = useStatsQuery();
 
 definePageMeta({
   middleware: "auth-route",
@@ -43,6 +43,7 @@ const stats = computed(() => ({
       <VRow>
         <VCol :cols="12" :sm="4">
           <StatCard
+            :error="isError"
             :icon="mdiSongs"
             :loading="isLoading"
             title="Songs"
@@ -52,6 +53,7 @@ const stats = computed(() => ({
         </VCol>
         <VCol :cols="12" :sm="4">
           <StatCard
+            :error="isError"
             :icon="mdiLists"
             :loading="isLoading"
             title="Lists"
@@ -61,6 +63,7 @@ const stats = computed(() => ({
         </VCol>
         <VCol :cols="12" :sm="4">
           <StatCard
+            :error="isError"
             :icon="mdiGroups"
             :loading="isLoading"
             title="Groups"

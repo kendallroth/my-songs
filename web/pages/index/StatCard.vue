@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { mdiHelpCircle as mdiDefault } from "@mdi/js";
+import { mdiHelpCircle as mdiDefault, mdiAlertCircle as mdiError } from "@mdi/js";
 
 import { NuxtLink } from "#components";
 
 interface StatCardProps {
+  error?: boolean | string;
   icon?: string;
   loading?: boolean;
   title: string;
@@ -12,6 +13,7 @@ interface StatCardProps {
 }
 
 withDefaults(defineProps<StatCardProps>(), {
+  error: undefined,
   icon: mdiDefault,
   loading: false,
   to: undefined,
@@ -23,7 +25,8 @@ withDefaults(defineProps<StatCardProps>(), {
     <VResponsive :aspect-ratio="4 / 3">
       <LayoutStack align-items="center" class="fill-height" justify-content="center" :spacing="4">
         <VIcon color="primary" :icon="icon" size="48" />
-        <span class="stat-card__value">{{ !loading ? value : "-" }}</span>
+        <span v-if="!error" class="stat-card__value">{{ !loading ? value : "-" }}</span>
+        <VIcon v-else-if="error" color="error" :icon="mdiError" size="64" />
         <VCardTitle class="stat-card__title">{{ title }}</VCardTitle>
       </LayoutStack>
       <VOverlay class="align-center justify-center" contained :model-value="loading">

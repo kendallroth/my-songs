@@ -18,7 +18,7 @@ interface SimpleTableProps {
 }
 
 const props = withDefaults(defineProps<SimpleTableProps>(), {
-  density: "default",
+  density: "comfortable",
   empty: false,
   emptyMessage: "No items found",
   fetching: false,
@@ -36,7 +36,9 @@ const paginationString = computed(() => `${props.pagination?.totalItems ?? 0} to
 <template>
   <VSheet :elevation="1" rounded>
     <ProgressLoader v-if="loading" />
-    <VAlert v-else-if="empty" type="warning">{{ emptyMessage }}</VAlert>
+    <VAlert v-else-if="empty" type="warning" variant="tonal">
+      {{ emptyMessage }}
+    </VAlert>
     <template v-else-if="!empty">
       <VTable :density="density">
         <thead>
@@ -60,7 +62,7 @@ const paginationString = computed(() => `${props.pagination?.totalItems ?? 0} to
         />
       </ActionBar>
     </template>
-    <VAlert v-else-if="error" type="error">
+    <VAlert v-else-if="error" type="error" variant="tonal">
       {{ getError(error) }}
     </VAlert>
   </VSheet>
